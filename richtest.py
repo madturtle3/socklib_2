@@ -3,18 +3,35 @@ from textual.app import App, ComposeResult
 import textual.binding
 import textual.color as color
 import textual.containers
+import textual.events
 import textual.keys
 import textual.layouts
 import textual.layouts.horizontal
+import textual.message
 from textual.screen import Screen
 import textual.widgets as widgets
 import textual
 
 class ButtonList(textual.containers.Horizontal):
-    BINDINGS=[("right","next_item","Next")]
+    BINDINGS=[("right","next_item"),("left","previous_item")]
+    index = 0
+    @textual.on(textual.events.Focus)
+    def on_focus(self):
+        self.index = 0
+
     
     def action_next_item(self):
-        self.app.action_focus_next()
+        self.index += 1
+        if self.index >= len(self.children):
+            self.index = 0
+        self.children[self.index].focus()
+        
+    def action_previous_item(self):
+        self.index -= 1
+        if self.index < 0:
+            self.index = len(self.children)-1
+        self.children[self.index].focus()
+        
         
 
 class MsgBox(widgets.Input):
