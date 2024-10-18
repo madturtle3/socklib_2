@@ -1,0 +1,19 @@
+#msgbox {
+    height:3;
+}
+.mains,Button {
+    border: round ansi_default;
+}
+RichLog {
+    padding: 0 1;
+    overflow: hidden;
+}
+RichLog:focus {
+    overflow: auto;
+}
+.mains:focus,Button:focus {
+    border: round ansi_blue;
+}
+* {
+    background: ansi_default;
+}
